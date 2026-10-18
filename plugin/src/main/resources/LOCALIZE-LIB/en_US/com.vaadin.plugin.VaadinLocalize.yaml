@@ -1,0 +1,36 @@
+vaadin.flow.module.extension.name:
+  text: Vaadin Flow
+notification.group.name:
+  text: Vaadin
+wizard.name:
+  text: Vaadin
+wizard.group.label:
+  text: 'Group:'
+wizard.group.invalid:
+  text: Group must use letters/digits/underscores/dots, include at least one dot, no leading/trailing or consecutive dots.
+wizard.starter.project:
+  text: Starter Project
+wizard.hello.world.projects:
+  text: Hello World Projects
+wizard.vaadin.version.label:
+  text: 'Vaadin version:'
+wizard.vaadin.version.stable:
+  text: Stable
+wizard.vaadin.version.prerelease:
+  text: Prerelease
+wizard.sample.view.title:
+  text: Include sample view
+wizard.sample.view.description:
+  text: A sample view built fully in Java, front to back.
+wizard.language.label:
+  text: 'Language:'
+wizard.architecture.label:
+  text: 'Architecture:'
+wizard.kotlin.info:
+  text: Kotlin support uses a community add-on.
+wizard.getting.started.title:
+  text: Getting Started guide
+wizard.progress.downloading:
+  text: Downloading Vaadin project
+wizard.download.failed.title:
+  text: Vaadin project download failed

@@ -1,19 +1,17 @@
-# Vaadin IntelliJ Plugin
+# Vaadin plugin for Consulo
 
-Official Vaadin plugin for JetBrains IntelliJ.
+A [Consulo](https://consulo.io) fork of the official [Vaadin IntelliJ plugin](https://github.com/vaadin/intellij-plugin).
 
-Improves developer experience while working with [Vaadin](https://vaadin.com) framework.</p>
-- Helps to create new Vaadin projects using configurable Hello World starters.</li>
-- Boosts [Vaadin Copilot](https://vaadin.com/copilot) experience.</li>
-- Helps to set up and run projects using HotSwap Agent.</li>
-- Provides navigation to [Flow](https://vaadin.com/flow) @Route views in Endpoints tool window.</li>
+Improves developer experience while working with the [Vaadin](https://vaadin.com) framework:
 
-Available at [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/23758-vaadin).
+- Creates new Vaadin projects from the Starter and Hello World projects of [start.vaadin.com](https://start.vaadin.com).
+- Lists [Flow](https://vaadin.com/flow) `@Route` views and Hilla `@BrowserCallable` services in the Endpoints tool window, and
+  resolves URLs to them.
+- Completes CSS class names in `addClassName(...)` and the other `HasStyle` methods.
+- Resolves `getTranslation("key")` to properties, `@StyleSheet` paths to stylesheets and `@Route` templates to URL paths.
+- Injects JavaScript into `Element.executeJs`, HTML into `Html` and regular expressions into `TextField.setPattern`.
+- Navigates from the TypeScript client of a Hilla service to its Java class and methods, and finds their usages in it.
 
-Thanks to [HotSwapHelper](https://github.com/gejun123456/HotSwapHelper) for inspiration and ideas on the Hotswap Agent integration.
+Not ported from the IntelliJ plugin: the Vaadin Copilot integration, usage statistics and debugging with HotSwap Agent.
 
-## API test application
-
-`plugin-api-test-client` is a simple Spring boot app with tests allowing to easily debug plugin endpoint API calls.
-
-Please remember to run development IDE (Run Plugin) before running the tests.
+See [DEVELOPMENT.md](DEVELOPMENT.md) to build and run the plugin.

@@ -1,149 +1,29 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin require-restart="false">
-    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.vaadin.intellij-plugin</id>
-
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Vaadin</name>
-
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="intellij@vaadin.com" url="https://vaadin.com">Vaadin Ltd</vendor>
-
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+<?xml version="1.0" encoding="utf-8"?>
+<consulo-plugin>
+    <id>consulo.vaadin.flow</id>
+    <name>Vaadin (Flow)</name>
+    <version>SNAPSHOT</version>
+    <vendor>consulo.io</vendor>
+    <localize>com.vaadin.plugin.VaadinLocalize</localize>
     <description>
         <![CDATA[
-        <p>Improves developer experience while working with <a href="https://vaadin.com">Vaadin</a> framework.</p>
-        <ul>
-         <li>Helps to create new Vaadin projects using configurable Hello World starters.</li>
-         <li>Boosts <a href="https://vaadin.com/copilot">Vaadin Copilot</a> experience.</li>
-         <li>Helps to set up and run projects using HotSwap Agent.</li>
-         <li>Provides navigation to <a href="https://vaadin.com/flow">Flow</a> @Route views in Endpoints tool window.</li>
-        </ul>
-        ]]>
+		<p>Improves developer experience while working with <a href="https://vaadin.com">Vaadin</a> framework.
+		A Consulo fork of the <a href="https://github.com/vaadin/intellij-plugin">Vaadin IntelliJ plugin</a>.</p>
+		<ul>
+			<li>Helps to create new Vaadin projects using configurable Hello World starters.</li>
+			<li>Provides navigation to <a href="https://vaadin.com/flow">Flow</a> @Route views and Hilla services in the Endpoints tool window.</li>
+		</ul>
+		]]>
     </description>
 
-    <!-- Product and plugin compatibility requirements.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
-    <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.java</depends>
+    <depends>consulo.java</depends>
+    <depends>consulo.javascript</depends>
+    <depends>com.intellij.xml</depends>
+    <depends>com.intellij.properties</depends>
+    <depends>consulo.css</depends>
     <depends>org.jetbrains.idea.maven</depends>
 
-    <!-- Vaadin Endpoints IntelliJ Ultimate dependencies -->
-    <depends>com.intellij.properties</depends>
-    <depends optional="true" config-file="vaadin-with-microservices.xml">com.intellij.modules.microservices</depends>
-    <depends optional="true" config-file="vaadin-with-microservices-jvm.xml">com.intellij.microservices.jvm</depends>
-    <depends optional="true" config-file="vaadin-with-javascript.xml">JavaScript</depends>
-
-    <depends optional="true" config-file="vaadin-injections.xml">org.intellij.intelliLang</depends>
-    <depends optional="true" config-file="vaadin-with-css.xml">com.intellij.css</depends>
-
-    <change-notes>
-        <![CDATA[
-        <p>Check <a href="https://github.com/vaadin/intellij-plugin/releases">release notes at GitHub</a> for more information.</p>
-        ]]>
-    </change-notes>
-
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
-    <extensions defaultExtensionNs="com.intellij">
-
-        <backgroundPostStartupActivity
-                implementation="com.vaadin.plugin.VaadinProjectDetector"/>
-
-        <applicationService
-                serviceImplementation="com.vaadin.plugin.ui.settings.VaadinSettings"/>
-        <applicationConfigurable
-                parentId="tools"
-                instance="com.vaadin.plugin.ui.settings.VaadinSettingsConfigurable"
-                id="com.vaadin.plugin.ui.settings.VaadinSettingsConfigurable"
-                displayName="Vaadin"/>
-
-        <!-- Vaadin Copilot -->
-        <projectService id="CopilotDotfileService"
-            serviceImplementation="com.vaadin.plugin.copilot.service.CopilotDotfileServiceImpl"
-            serviceInterface="com.vaadin.plugin.copilot.service.CopilotDotfileService" />
-        <notificationGroup id="Vaadin Copilot" displayType="BALLOON"/>
-        <errorHandler implementation="com.vaadin.plugin.copilot.CopilotErrorHandler"/>
-        <statusBarWidgetFactory implementation="com.vaadin.plugin.ui.VaadinStatusBarWidgetFactory"
-                                id="VaadinStatusBarWidgetFactory" order="last"/>
-        <httpRequestHandler implementation="com.vaadin.plugin.copilot.service.CopilotRestService"/>
-
-        <!-- Vaadin Project Wizard -->
-        <moduleBuilder id="VaadinModuleBuilder" builderClass="com.vaadin.plugin.module.VaadinProjectBuilderAdapter"/>
-
-        <!-- Actions on save -->
-        <actionOnSaveInfoProvider id="VaadinCompileOnSaveInfoProvider"
-                                  implementation="com.vaadin.plugin.actions.VaadinOnSaveInfoProvider"
-                                  order="last"/>
-        <actionOnSave id="VaadinCompileOnSaveAction"
-                      implementation="com.vaadin.plugin.actions.VaadinCompileOnSaveAction" order="last"/>
-
-        <!-- Default program patcher to inject plugin file location -->
-        <java.programPatcher implementation="com.vaadin.plugin.copilot.DefaultProgramPatcher"/>
-
-        <!-- Debug using Hotswap Agent -->
-        <programRunner implementation="com.vaadin.plugin.hotswapagent.HotswapAgentRunner"/>
-        <java.programPatcher implementation="com.vaadin.plugin.hotswapagent.HotswapAgentProgramPatcher"/>
-        <executor implementation="com.vaadin.plugin.hotswapagent.HotswapAgentExecutor"/>
-
-        <!-- Configuration check -->
-        <notificationGroup id="Vaadin configuration check" displayType="STICKY_BALLOON"/>
-
-        <dependencySupport kind="java" coordinate="com.vaadin:vaadin-core" displayName="Vaadin"/>
-    </extensions>
-
-    <actions>
-        <action
-                id="HotSwap.installOrUpdate"
-                class="com.vaadin.plugin.actions.InstallOrUpdateHotSwapAction"
-                text="HotSwap: Install or update"
-                description="Installs or updates hotswap-agent.jar">
-        </action>
-        <action
-                id="HotSwap.debug"
-                class="com.vaadin.plugin.actions.DebugUsingHotSwapAgentAction"
-                text="Debug using HotSwapAgent"
-                icon="/vaadin/icons/debug.svg">
-            <add-to-group group-id="RunDashboardContentToolbar"
-                          relative-to-action="RunDashboard.Debug"
-                          anchor="after"/>
-            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar3"
-                          relative-to-action="Rerun"
-                          anchor="after" />
-        </action>
-        <action
-                id="HotSwap.debug.toolbar"
-                class="com.vaadin.plugin.actions.DebugUsingHotSwapAgentToolbarAction"
-                text="Debug using HotSwapAgent"
-                icon="/vaadin/icons/debug.svg">
-            <add-to-group group-id="RunToolbarMainActionGroup"
-                          relative-to-action="MoreRunToolbarActions"
-                          anchor="before"/>
-        </action>
-    </actions>
-
-    <projectListeners>
-        <listener
-                class="com.vaadin.plugin.VaadinProjectDetector"
-                topic="com.intellij.openapi.roots.ModuleRootListener"/>
-        <listener
-                class="com.vaadin.plugin.VaadinProjectDetector"
-                topic="com.intellij.openapi.project.DumbService$DumbModeListener"/>
-        <listener
-                class="com.vaadin.plugin.copilot.listeners.CopilotVaadinProjectListener"
-                topic="com.vaadin.plugin.listeners.VaadinProjectListener"/>
-        <listener
-                class="com.vaadin.plugin.listeners.ConfigurationCheckVaadinProjectListener"
-                topic="com.vaadin.plugin.listeners.VaadinProjectListener" />
-        <listener
-                class="com.vaadin.plugin.listeners.VaadinImportExclusionListener"
-                topic="com.vaadin.plugin.listeners.VaadinProjectListener" />
-        <listener
-                class="com.vaadin.plugin.copilot.listeners.CopilotDynamicPluginListener"
-                topic="com.intellij.ide.plugins.DynamicPluginListener"/>
-    </projectListeners>
-
-</idea-plugin>
+    <tags>
+        <tag>web.framework</tag>
+    </tags>
+</consulo-plugin>

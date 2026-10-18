@@ -1,29 +1,25 @@
 # Working in this repository
 
-Read [DEVELOPMENT.md](DEVELOPMENT.md) before changing build or test configuration. It documents the
-project's conventions; the points below are the ones most easily got wrong.
+This is the Consulo fork of the Vaadin IntelliJ plugin. Read [DEVELOPMENT.md](DEVELOPMENT.md) first; the points below
+are the ones most easily got wrong.
 
-## Tests
+## Code
 
-- **Never use `@TestApplication` or `projectFixture()`.** Tests needing a live `Application` or
-  `Project` extend `HeavyPlatformTestCase` (real files) or `BasePlatformTestCase` (no real files).
-  See *Writing tests that need an IDE application* in DEVELOPMENT.md for why — the JUnit 5 test
-  application has a 20-second teardown budget that the marketplace publishing agent misses, which
-  fails the build with `AlreadyDisposedException` while every test passes. A single class using it
-  arms the deadline for the whole run.
-- Those base classes are JUnit 3: `test*` method names, `setUp`/`tearDown` overrides, no `@Test`.
-  JUnit 5 annotations on a `TestCase` stop it being collected, silently.
-- Tests that need neither an application nor a project stay plain JUnit 5.
+- Java, Maven, JPMS. The module is `@NullMarked` and NullAway runs in the build: mark what can be null with
+  `org.jspecify.annotations.Nullable`, nothing else.
+- Keep upstream's package layout and class names, so an upstream change can be found and ported file by file. Upstream is
+  Kotlin at https://github.com/vaadin/intellij-plugin.
+- Gate features on the Vaadin module extension through `VaadinProjectUtil`, never on the classpath.
+- Read Java PSI, not UAST.
+- When the Consulo platform or a plugin lacks an API, add it in the owning repository instead of working around it.
+- Out of scope for now: the Vaadin Copilot integration, usage statistics, the status bar widget and debugging with
+  HotSwap Agent. Do not port them back without being asked.
+- The new project wizard generates and imports Maven projects only.
 
 ## Before committing
 
 ```bash
-./gradlew :plugin:spotlessApply    # ktfmt, Google style, 120 columns
-./gradlew :plugin:test
+mvn package -T 1C
 ```
 
-## Platform API
-
-Prefer public API over `impl` packages and anything `@ApiStatus.Internal`; the marketplace verifier
-reports internal usage, and it has had to be undone before (#566). When an `impl` class looks
-necessary, check whether the method is declared on the public interface first.
+Unit tests cover plain logic only; IDE behaviour is checked by hand in the sandbox on a real Vaadin project.
