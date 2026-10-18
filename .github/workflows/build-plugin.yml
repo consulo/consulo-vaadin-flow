@@ -1,0 +1,11 @@
+name: build-plugin
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    build:
+        uses: consulo/shared-workflows/.github/workflows/build-plugin.yml@master

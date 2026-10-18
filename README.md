@@ -13,5 +13,3 @@ Improves developer experience while working with the [Vaadin](https://vaadin.com
 - Navigates from the TypeScript client of a Hilla service to its Java class and methods, and finds their usages in it.
 
 Not ported from the IntelliJ plugin: the Vaadin Copilot integration, usage statistics and debugging with HotSwap Agent.
-
-See [DEVELOPMENT.md](DEVELOPMENT.md) to build and run the plugin.
