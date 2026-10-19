@@ -17,6 +17,7 @@ package com.vaadin.plugin.utils;
 
 import com.vaadin.plugin.localize.VaadinLocalize;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.project.ui.notification.NotificationDisplayType;
 import consulo.project.ui.notification.NotificationGroup;
 import consulo.project.ui.notification.NotificationGroupContributor;
 
@@ -30,8 +31,19 @@ import java.util.function.Consumer;
 public class VaadinNotificationGroupContributor implements NotificationGroupContributor {
     public static final NotificationGroup GROUP = NotificationGroup.balloonGroup("vaadin", VaadinLocalize.notificationGroupName());
 
+    /**
+     * Questions to the user: the balloon stays until it is answered, instead of fading out like the other ones.
+     */
+    public static final NotificationGroup SUGGESTIONS = new NotificationGroup(
+        "vaadin.suggestions",
+        VaadinLocalize.notificationGroupSuggestionsName(),
+        NotificationDisplayType.STICKY_BALLOON,
+        true
+    );
+
     @Override
     public void contribute(Consumer<NotificationGroup> registrator) {
         registrator.accept(GROUP);
+        registrator.accept(SUGGESTIONS);
     }
 }

@@ -2,6 +2,8 @@ vaadin.flow.module.extension.name:
   text: Vaadin Flow
 notification.group.name:
   text: Vaadin
+notification.group.suggestions.name:
+  text: Vaadin suggestions
 wizard.name:
   text: Vaadin
 wizard.group.label:
@@ -34,3 +36,11 @@ wizard.progress.downloading:
   text: Downloading Vaadin project
 wizard.download.failed.title:
   text: Vaadin project download failed
+import.exclusion.awt.title:
+  text: Exclude java.awt from auto-import?
+import.exclusion.awt.content:
+  text: Vaadin and AWT share class names such as Button and TextField. Excluding java.awt stops code completion and auto-import from offering the AWT classes. Answer No if this project uses AWT too.
+import.exclusion.awt.yes:
+  text: 'Yes'
+import.exclusion.awt.no:
+  text: 'No'
