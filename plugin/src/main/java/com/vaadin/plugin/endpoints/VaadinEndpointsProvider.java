@@ -15,6 +15,7 @@
  */
 package com.vaadin.plugin.endpoints;
 
+import com.vaadin.plugin.module.extension.VaadinFlowModuleExtension;
 import com.vaadin.plugin.utils.VaadinProjectUtil;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.component.util.ModificationTracker;
@@ -25,6 +26,7 @@ import consulo.endpoint.ModuleEndpointFilter;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.extension.ModuleExtension;
 import consulo.project.Project;
 import org.jspecify.annotations.Nullable;
 
@@ -50,10 +52,12 @@ public abstract class VaadinEndpointsProvider implements EndpointProvider<Vaadin
 
     @Override
     public Status getStatus() {
-        if (VaadinProjectUtil.hasVaadinModules(myProject)) {
-            return Status.HAS_ENDPOINTS;
-        }
-        return Status.UNAVAILABLE;
+        return Status.HAS_ENDPOINTS;
+    }
+
+    @Override
+    public Class<? extends ModuleExtension> getModuleExtensionClass() {
+        return VaadinFlowModuleExtension.class;
     }
 
     @Override
